@@ -1,0 +1,122 @@
+/* CSS file for index.html */
+
+#search_form {
+  left: 0;
+  right: 0;
+  margin: 3% auto auto auto;
+  background-color: #F8F8F8;
+}
+
+#no_records {
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  margin: 3% auto auto auto;
+  padding: 1.5%;
+  background-color: #FFF5C8;
+  font-size: 12px;
+  color: #795a3c;
+}
+
+#error_form {
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  margin: 3% auto auto auto;
+  padding: 1.5%;
+  background-color: #FED5D9;
+  font-size: 12px;
+  color: #8E0A20;
+}
+
+.title {
+  text-align: center;
+  padding-top: 2%;
+}
+
+.required:after {
+  content: " *";
+  color: red;
+}
+
+.form-inline {
+  padding: 0.5%;
+}
+
+#distance {
+  margin-right: 2%;
+}
+
+.radio {
+  max-width: 100%;
+  width: 50%;
+}
+
+.row {
+  width: 100%;
+  margin: auto;
+  padding: 0;
+  display: flex;
+}
+
+#other-input {
+  width: 100%;
+}
+
+.btn {
+  margin-top: 1%;
+  margin-right: 1%;
+  margin-bottom: 3%;
+  font-size: 12px;
+}
+
+.groups {
+  text-align: center;
+}
+
+#firstValidate {
+  margin-left: 28px;
+  font-size: 12px;
+  color: red;
+  visibility: hidden;
+}
+
+#secondValidate {
+  text-align: left;
+  font-size: 12px;
+  color: red;
+  visibility: hidden;
+}
+
+.results-list {
+  margin: 0 auto auto auto;
+}
+
+.table {
+  font-size: 12px;
+}
+
+.top-row {
+  border-bottom: 2px solid black;
+}
+
+.table tbody tr:hover td, .table tbody tr:hover th {
+  background-color: #DADADA;
+}
+
+svg:hover {
+  cursor: pointer;
+}
+
+#detailsText {
+  color: darkgray;
+}
+
+.details-list {
+  margin: 0 auto auto auto;
+}
+
+#map {
+  height: 400px;
+  width: 100%;
+}

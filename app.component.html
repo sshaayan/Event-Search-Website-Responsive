@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html ng-app lang="en">
+  <head>
+    <!-- meta tags -->
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Linked files -->
+    <script src="assets/core.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="app.component.css" media="screen"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <script src="assets/core.js" type="text/javascript"></script>
+
+    <!-- title -->
+    <title>HW8</title>
+  </head>
+
+  <body onload="pageLoaded();">
+    <div class="groups">
+      <!-- Code for the search form -->
+      <form class="col-lg-9 col-md-9 col-sm-10 rounded border" id="search_form">
+        <h6 class="title">Entertainment Event Ticket Search</h6>
+        <!-- Keyword input form -->
+        <div class="form-inline">
+          <label class="required col-lg-4 col-md-4 col-sm-3 small" for="keyword">Keyword</label>
+          <input matInput type="search" class="form-control col-lg-6" id="keyword" placeholder="Enter Artist, Team or Event Name (eg. Lakers)" [matAutocomplete]="auto" [formControl]="myControl" (input)="keywordChange($event.target)">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <ng-container *ngIf="options?.length">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </div>
+        <div class="col-lg-9 col-md-10 col-sm-8" id="firstValidate">Please enter a keyword.</div>
+        <!-- Category input form -->
+        <div class="form-inline">
+          <label class="col-lg-4 col-md-4 col-sm-3 small" for="category">Category</label>
+          <select class="form-control col-lg-2" id="categoryList">
+            <option value="">All</option>
+            <option value="KZFzniwnSyZfZ7v7nJ">Music</option>
+            <option value="KZFzniwnSyZfZ7v7nE">Sports</option>
+            <option value="KZFzniwnSyZfZ7v7na">Arts & Theatre</option>
+            <option value="KZFzniwnSyZfZ7v7nn">Film</option>
+            <option value="KZFzniwnSyZfZ7v7n1">Miscellaneous</option>
+          </select>
+        </div>
+        <!-- Distance input form -->
+        <div class="form-inline">
+          <label class="col-lg-4 col-md-4 col-sm-3 small" for="distance unit-list">Distance</label>
+          <input type="search" class="form-control col-lg-2 col-md-2 col-sm-3" id="distance" placeholder="10">
+          <select class="form-control col-lg-2 col-md-2 col-sm-3" id="unit-list">
+            <option value="miles">miles</option>
+            <option value="km">kilometers</option>
+          </select>
+        </div>
+        <!-- Location input form -->
+        <div class="form-inline">
+          <label class="required col-lg-4 col-md-4 col-sm-3 small control-label" for="curr-loc">From</label>
+          <div class="radio">
+            <div class="radio-inline row">
+              <input class="form-check-input small locButton" type="radio" name="location" id="curr-loc" checked>
+              <label class="form-check-label small" for="curr-loc">Current location</label>
+            </div>
+            <div class="radio-inline row">
+              <input class="form-check-input small locButton" type="radio" name="location" id="other-loc">
+              <label class="form-check-label small" for="other-loc">Other. Please specify:</label>
+            </div>
+            <input type="search" for="other-loc" class="form-control" id="other-input" disabled>
+            <div id="secondValidate">Please enter a location.</div>
+          </div>
+        </div>
+
+        <!-- Input form buttons -->
+        <div class="form-inline">
+          <button type="button" class="btn btn-primary offset-lg-2 offset-md-2 offset-sm-1" id="search" style="font-size: 12px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+            Search
+          </button>
+          <button id="clear" type="button" class="btn btn-light border" style="font-size: 12px">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-nested" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+            Clear
+          </button>
+        </div>
+      </form>
+
+      <!-- Result buttons -->
+      <form class="result-btns">
+        <button type="button" class="btn btn-primary" style="font-size: 12px">Results</button>
+        <button type="button" id="favBtn" class="btn btn-light" style="font-size: 12px">Favorites</button>
+      </form>
+    </div>
+
+    <!-- Table of results -->
+    <div class="results-list col-lg-9" id="results-table">
+      <!-- Inner html will be set using JQuery -->
+    </div>
+
+    <!-- Table of details -->
+    <div class="details-list col-lg-9" id="details-table">
+      <!-- Inner html will be set using JQuery -->
+    </div>
+
+    <!-- Table of favorited results -->
+    <div class="results-list col-lg-9" id="fav-results-table">
+      <!-- Inner html will be set using JQuery -->
+    </div>
+
+    <!-- Table of details for favorited events -->
+    <div class="details-list col-lg-9" id="fav-details-table">
+      <!-- Inner html will be set using JQuery -->
+    </div>
+  </body>
+</html>
